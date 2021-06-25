@@ -37,7 +37,8 @@ namespace ContosoUniversity
                     // The EnsureCreated method takes no action if a database for the context exists. If no database exists, it creates the database and schema
                     // When data model changes (in early stage), EnsureCreated() will delete the database, change the data model (eg. add new field), run the app, creates a database with the new schema
                     context.Database.EnsureCreated();
-                    // DbInitializer.Initialize(context);
+                    // Seed the database
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
