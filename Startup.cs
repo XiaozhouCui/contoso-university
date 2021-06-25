@@ -27,10 +27,13 @@ namespace ContosoUniversity
         {
             services.AddRazorPages();
 
-            // db context is auto added by the following CLI command:
+            // db context is auto added by the following CLI command (-dc -sqlite)
             // dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite
             services.AddDbContext<SchoolContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("SchoolContext")));
+
+            // provides helpful error information in dev, 
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
