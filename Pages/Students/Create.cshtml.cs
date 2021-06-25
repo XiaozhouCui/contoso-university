@@ -27,18 +27,22 @@ namespace ContosoUniversity.Pages.Students
         [BindProperty]
         public Student Student { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        // TryUpdateModelAsync() uses the posted form values from RazorPages PageModel, prevents overposting
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var emptyStudent = new Student();
+
+            if (await TryUpdateModelAsync<Student>(
+                emptyStudent,
+                "student",   // Prefix for form value, case insensitive, e.g. Student.FirstMidName
+                s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate)) // Updates only the properties listed, prevents overposting
             {
-                return Page();
+                _context.Students.Add(emptyStudent);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
 
-            _context.Students.Add(Student);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

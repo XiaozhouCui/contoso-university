@@ -28,7 +28,11 @@ namespace ContosoUniversity.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
+            Student = await _context.Students
+                .Include(s => s.Enrollments) // load the Student.Enrollments navigation property
+                .ThenInclude(e => e.Course) // within each enrollment, load the Enrollment.Course navigation property
+                .AsNoTracking() // improves performance
+                .FirstOrDefaultAsync(m => m.ID == id); // better than SingleOrDefaultAsync (throw error if more than one found) and FindAsync (won't retrieve related data)
 
             if (Student == null)
             {
