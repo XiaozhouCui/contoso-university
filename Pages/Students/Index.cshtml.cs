@@ -28,15 +28,32 @@ namespace ContosoUniversity.Pages.Students
 
         // sortOrder comes from query string, it is either Name or Date
         // ?sortOrder=... will be added to query string when the user clicks a column heading link
-        public async Task OnGetAsync(string sortOrder)
+        // The searchString parameter is received from a text box in Razor Page
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             // NameSort and DateSort are used by the Razor Page to configure the column heading hyperlinks
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : ""; // using System
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
 
-            // When an IQueryable studentsIQ is created or modified, no query is sent to the database (deferred)
+            CurrentFilter = searchString;
+
+            // When an IQueryable object "studentsIQ" is created or modified, no query is sent to the database (deferred)
             IQueryable<Student> studentsIQ = from s in _context.Students
                                              select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                // LINQ statement Where() clause selects only students whose first name or last name contains the search string.
+                // The LINQ statement is executed only if there's a value to search for.
+
+                // case-sensitive filter
+                studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstMidName.Contains(searchString));
+
+                // // case-insensitive filter
+                // studentsIQ = studentsIQ.Where(s => s.LastName.ToUpper().Contains(searchString.ToUpper())
+                //        || s.FirstMidName.ToUpper().Contains(searchString.ToUpper()));
+            }
             // modify the IQueryable before execution
             switch (sortOrder)
             {
