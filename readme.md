@@ -27,3 +27,11 @@
 - Updates the code in the `Up` and `Down` methods in InitialCreate
 - Drop the old SQLite database **"CU.db"** `dotnet ef database drop --force`
 - Execute the migration code to re-create the database **"CU.db"** `dotnet ef database update`
+
+## Update Student model
+- Add new property and attributes in In Student.cs
+- The attribute `[Column("FirstName")]` for **FirstMidName** will map the name of the FirstMidName property to "FirstName" in the database
+- At this point, running the app will fail with *"SqliteException: SQLite Error 1: 'no such column: s.FirstName'."* 
+- Create another migration with the updated schema `dotnet ef migrations add ColumnFirstName`
+- Execute the new migration `dotnet ef database update`, this will fix the problem
+- In SQLite, the column that was FirstMidName is now FirstName.
