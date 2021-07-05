@@ -1,19 +1,22 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ContosoUniversity.Migrations
 {
+    // The EF Core "migrations add" command generated this code to create the database.
     public partial class InitialCreate : Migration
     {
+        // Up method creates the database tables that correspond to the data model entity sets
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
-                    CourseID = table.Column<int>(type: "INTEGER", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    Credits = table.Column<int>(type: "INTEGER", nullable: false)
+                    CourseID = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Credits = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,11 +27,11 @@ namespace ContosoUniversity.Migrations
                 name: "Student",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    FirstMidName = table.Column<string>(type: "TEXT", nullable: true),
-                    EnrollmentDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    LastName = table.Column<string>(nullable: true),
+                    FirstMidName = table.Column<string>(nullable: true),
+                    EnrollmentDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,11 +42,11 @@ namespace ContosoUniversity.Migrations
                 name: "Enrollment",
                 columns: table => new
                 {
-                    EnrollmentID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CourseID = table.Column<int>(type: "INTEGER", nullable: false),
-                    StudentID = table.Column<int>(type: "INTEGER", nullable: false),
-                    Grade = table.Column<int>(type: "INTEGER", nullable: true)
+                    EnrollmentID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CourseID = table.Column<int>(nullable: false),
+                    StudentID = table.Column<int>(nullable: false),
+                    Grade = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,6 +76,7 @@ namespace ContosoUniversity.Migrations
                 column: "StudentID");
         }
 
+        // Down method deletes the database tables that correspond to the data model entity sets
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
