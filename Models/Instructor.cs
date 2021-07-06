@@ -32,6 +32,6 @@ namespace ContosoUniversity.Models
         }
 
         public ICollection<Course> Courses { get; set; } // 1 instructor can teach many courses, collection navigation property
-        public OfficeAssignment OfficeAssignment { get; set; } // 1 instructor can have 1 or 0 office (nullable), reference navigation property
+        public OfficeAssignment OfficeAssignment { get; set; } // 1 instructor can have 1 or 0 office (nullable), but 1 office must have 1 instructor (non-nullable)
     }
 }
