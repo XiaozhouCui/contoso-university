@@ -21,12 +21,26 @@ namespace ContosoUniversity.Data
         public DbSet<Student> Students { get; set; } // Student table will be available via "_context.Students"
         public DbSet<Enrollment> Enrollments { get; set; } // _context.Enrollments
         public DbSet<Course> Courses { get; set; } // _context.Courses
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<OfficeAssignment> OfficeAssignments { get; set; }
+
+        // Fluent API vs Attributes (in entity classes): fluent API is used here only for database mapping that can't be done with attributes. However, the fluent API can specify most of the formatting, validation, and mapping rules that can be done with attributes.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // configure table names for each entity
-            modelBuilder.Entity<Course>().ToTable("Course");
-            modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
-            modelBuilder.Entity<Student>().ToTable("Student");
+            // // use Fluent API to configure table names for each entity
+            // modelBuilder.Entity<Course>().ToTable("Course");
+            // modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
+            // modelBuilder.Entity<Student>().ToTable("Student");
+
+            // use Fluent API to configure the many-to-many relationship between the Instructor and Course entities
+            modelBuilder.Entity<Course>().ToTable(nameof(Course))
+                .HasMany(c => c.Instructors)
+                .WithMany(i => i.Courses);
+
+            // use Fluent API to configure table names for each entity
+            modelBuilder.Entity<Student>().ToTable(nameof(Student));
+            modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
         }
     }
 }

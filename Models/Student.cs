@@ -9,7 +9,7 @@ namespace ContosoUniversity.Models
     {
         public int ID { get; set; } // By default, EF Core interprets a property that's named ID or classnameID as the primary key
 
-        // attributes from DataAnnotations can control how classes and properties are mapped to the database.
+        // attributes from DataAnnotations can control how classes and properties are mapped to the database, similar to Fluent API
         [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")] // caption for the text boxes
