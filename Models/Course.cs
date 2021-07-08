@@ -7,7 +7,7 @@ namespace ContosoUniversity.Models
     public class Course
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)] // allows the app to specify the primary key rather than having the database generate it. Specified CourseID: a course number such as a 1000 series for the math department, a 2000 series for the English department
-        [Display(Name = "Number")]
+        [Display(Name = "Number")] // CourseID will be shown as "Number" in RazorPage
         public int CourseID { get; set; }
         
         [StringLength(50, MinimumLength = 3)]

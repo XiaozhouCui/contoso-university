@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 
 namespace ContosoUniversity.Pages.Courses
@@ -19,13 +15,15 @@ namespace ContosoUniversity.Pages.Courses
             _context = context;
         }
 
-        public IList<Course> Course { get; set; }
+        public IList<Course> Courses { get; set; }
 
         // The scaffolding engine specified eager loading for the Department navigation property
         public async Task OnGetAsync()
         {
-            Course = await _context.Courses
-                .Include(c => c.Department).ToListAsync(); // .Include() specifies eager loading
+            Courses = await _context.Courses
+                .Include(c => c.Department) // .Include() specifies eager loading
+                .AsNoTracking() // improves performance because the entities returned are not tracked, not tracked because they're not updated in the current context.
+                .ToListAsync();
         }
     }
 }

@@ -57,3 +57,8 @@
 - Scafold Course pages `dotnet aspnet-codegenerator razorpage -m Course -dc SchoolContext -udl -outDir Pages\Courses --referenceScriptLibraries`
 - 10 files will be generated in *Pages/Courses* folder
 - Run the app, and the Courses page will be available in browser. However, the Department column only have ID numbers, not department names.
+
+## Display the Department name
+- Update *Index.cshtml* and *Index.cshtml.cs*
+- CourseID is shown as "Number" in the column header
+- In RazorPage, `@Html.DisplayFor(modelItem => item.Department.Name)` will displays the Name property of the Department entity that's loaded into the Department navigation property
