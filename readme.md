@@ -35,3 +35,17 @@
 - Create another migration with the updated schema `dotnet ef migrations add ColumnFirstName`
 - Execute the new migration `dotnet ef database update`, this will fix the problem
 - In SQLite, the column that was FirstMidName is now FirstName.
+
+## Add new entities: Course, Department, Instructor, OfficeAssignment
+- Add new entities: Course, Department, Instructor, OfficeAssignment
+- Setup Foreign Keys and reference navigation properties in each entity model
+- In SchoolContext, use **Fluent API** to configure the many-to-many relationship between the Instructor and Course entities
+- Seed the database with new data in DbInitializer.cs
+
+## Drop and re-create the database
+- If using SQLite, need to drop and recreate the database
+- Delete the *Migrations* folder.
+- Drop the old SQLite db `dotnet ef database drop --force`, *CU.db* will be removed
+- Generate new migration files `dotnet ef migrations add InitialCreate`
+- Update the database by executing the migration files `dotnet ef database update` *CU.db* will be re-created
+- Run the app `dotnet watch run`, the database will be populated with new data
