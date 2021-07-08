@@ -18,6 +18,9 @@
 ## Use codegenerator to scaffold Student pages, and wire up db context
 - *Create a Pages/Students folder*
 - `dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite`
+- 10 files will be generated in *Pages/Students* folder
+- DB context will be registered as a service in `Startup.ConfigureServices()` (DI container), using SQLite
+- `-udl` means `--​useDefaultLayout`
 
 ## Migrations for SQLite
 - Install Entity Framework CLI `dotnet tool install --global dotnet-ef`
@@ -40,12 +43,17 @@
 - Add new entities: Course, Department, Instructor, OfficeAssignment
 - Setup Foreign Keys and reference navigation properties in each entity model
 - In SchoolContext, use **Fluent API** to configure the many-to-many relationship between the Instructor and Course entities
-- Seed the database with new data in DbInitializer.cs
+- Update the seed data in *DbInitializer.cs*, to include new entities
 
 ## Drop and re-create the database
-- If using SQLite, need to drop and recreate the database
-- Delete the *Migrations* folder.
+- If using SQLite, need to drop and recreate the database, migrations history will be cleared
+- Delete the *Migrations* folder
 - Drop the old SQLite db `dotnet ef database drop --force`, *CU.db* will be removed
 - Generate new migration files `dotnet ef migrations add InitialCreate`
-- Update the database by executing the migration files `dotnet ef database update` *CU.db* will be re-created
-- Run the app `dotnet watch run`, the database will be populated with new data
+- Update the database by executing the migration files `dotnet ef database update`, *CU.db* will be re-created
+- Run the app `dotnet watch run`, the empty database will be seeded with new entities
+
+## Create Course pages
+- Scafold Course pages `dotnet aspnet-codegenerator razorpage -m Course -dc SchoolContext -udl -outDir Pages\Courses --referenceScriptLibraries`
+- 10 files will be generated in *Pages/Courses* folder
+- Run the app, and the Courses page will be available in browser. However, the Department column only have ID numbers, not department names.
