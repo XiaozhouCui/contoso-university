@@ -1,4 +1,4 @@
-# CLI commands used
+# Project Instructions
 
 ## Create the web app project
 - `dotnet new webapp -o ContosoUniversity`
@@ -16,8 +16,8 @@
 - `dotnet tool install --global dotnet-aspnet-codegenerator`
 
 ## Use codegenerator to scaffold Student pages, and wire up db context
-- *Create a Pages/Students folder*
-- `dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite`
+- Optional: Create a *Pages/Students* folder
+- Scaffold Student pages `dotnet aspnet-codegenerator razorpage -m Student -dc ContosoUniversity.Data.SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries -sqlite`
 - 10 files will be generated in *Pages/Students* folder
 - DB context will be registered as a service in `Startup.ConfigureServices()` (DI container), using SQLite
 - `-udl` means `--​useDefaultLayout`
@@ -62,3 +62,9 @@
 - Update *Index.cshtml* and *Index.cshtml.cs*
 - CourseID is shown as "Number" in the column header
 - In RazorPage, `@Html.DisplayFor(modelItem => item.Department.Name)` will displays the Name property of the Department entity that's loaded into the Department navigation property
+
+## Create Instructor pages
+- The instructors page shows data from three different tables. Add a view model *InstructorIndexData.cs* that includes three properties representing the three tables.
+- Scafold Instructor pages `dotnet aspnet-codegenerator razorpage -m Instructor -dc SchoolContext -udl -outDir Pages\Instructors --referenceScriptLibraries`
+- 10 files will be generated in *Pages/Instructors* folder
+- Run the app, at this point, the table only shows the instructors' name and hire date, it doesn't show Office and Courses columns.
