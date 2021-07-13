@@ -15,8 +15,8 @@ namespace ContosoUniversity.Models
         public string LastName { get; set; }
 
         [Required]
-        [Column("FirstName")]
-        [Display(Name = "First Name")]
+        [Column("FirstName")] // name in db table column
+        [Display(Name = "First Name")] // name in razor pages @Html.DisplayNameFor()
         [StringLength(50)]
         public string FirstMidName { get; set; }
 

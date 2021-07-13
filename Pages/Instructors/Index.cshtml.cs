@@ -17,7 +17,7 @@ namespace ContosoUniversity.Pages.Instructors
         }
 
         public InstructorIndexData InstructorData { get; set; }
-        public int InstructorID { get; set; }
+        public int InstructorID { get; set; } // to store the ID of the SELECTED instructor
         public int CourseID { get; set; }
 
         // The OnGetAsync method accepts optional route data for the ID of the selected instructor.

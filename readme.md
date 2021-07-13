@@ -64,7 +64,17 @@
 - In RazorPage, `@Html.DisplayFor(modelItem => item.Department.Name)` will displays the Name property of the Department entity that's loaded into the Department navigation property
 
 ## Create Instructor pages
-- The instructors page shows data from three different tables. Add a view model *InstructorIndexData.cs* that includes three properties representing the three tables.
+- The instructors page shows data from three different tables. Add a **view model** class *InstructorIndexData.cs* that includes three properties representing the three tables.
 - Scafold Instructor pages `dotnet aspnet-codegenerator razorpage -m Instructor -dc SchoolContext -udl -outDir Pages\Instructors --referenceScriptLibraries`
 - 10 files will be generated in *Pages/Instructors* folder
 - Run the app, at this point, the table only shows the instructors' name and hire date, it doesn't show Office and Courses columns.
+
+## Load related data in Index page
+- Update the IndexModel in *Pages/Instructors*, eagerly load (`.Include()`) the `Instructors` related data `OfficeAssignment` and `Courses`
+- Eagerly load (`.ThenInclude()`) the `Courses` related data `Department`, now `Instructors` contains data from 3 other tables
+- Use **view model**'s property `InstructorData.Instructors` to store instructors that contain related data
+- Use **view model**'s property `InstructorData.Courses` to store courses courses for the selected Instructor.
+- Use **view model**'s property `InstructorData.Enrollments` to store student enrollments for the selected course.
+- In Index RazorPage, `@page "{id:int?}"` is a route template. The route template changes integer query strings in the URL to route data.
+- In Index RazorPage, add a table of courses for the selected Instructor.
+- In Index RazorPage, add a table of student enrollments for the selected course.
