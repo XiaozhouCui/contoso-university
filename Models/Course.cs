@@ -16,6 +16,7 @@ namespace ContosoUniversity.Models
         [Range(0, 5)]
         public int Credits { get; set; }
         public int DepartmentID { get; set; } // Freign Key, it is not necessary (EF can auto create FK) but it can make updates simpler and more efficient (with FK, don't have to fetch Department before update)
+        // EF Core uses the Course.DepartmentID FK to load the Department navigation property.
         public Department Department { get; set; } // reference navigation property: 1 course belongs to 1 department 
         public ICollection<Enrollment> Enrollments { get; set; } // collection navigation property: 1 Course has many students
         public ICollection<Instructor> Instructors { get; set; } // collection navigation property: 1 course may be taught by multiple instructors

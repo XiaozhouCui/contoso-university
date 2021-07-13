@@ -69,7 +69,7 @@
 - 10 files will be generated in *Pages/Instructors* folder
 - Run the app, at this point, the table only shows the instructors' name and hire date, it doesn't show Office and Courses columns.
 
-## Load related data in Index page
+## Load related data into Index page
 - Update the IndexModel in *Pages/Instructors*, eagerly load (`.Include()`) the `Instructors` related data `OfficeAssignment` and `Courses`
 - Eagerly load (`.ThenInclude()`) the `Courses` related data `Department`, now `Instructors` contains data from 3 other tables
 - Use **view model**'s property `InstructorData.Instructors` to store instructors that contain related data
@@ -78,3 +78,8 @@
 - In Index RazorPage, `@page "{id:int?}"` is a route template. The route template changes integer query strings in the URL to route data.
 - In Index RazorPage, add a table of courses for the selected Instructor.
 - In Index RazorPage, add a table of student enrollments for the selected course.
+
+## Update Course Create page
+- Add base model `DepartmentNamePageModel`, to replace the DepartmentID (FK) with department names in the drop-down menu
+- `CreateModel` and `EditModel` will inherite from `DepartmentNamePageModel`
+- Update the CreateModel and CreatePage to load related department names into drop-down menu.
