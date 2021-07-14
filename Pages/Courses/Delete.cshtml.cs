@@ -22,6 +22,7 @@ namespace ContosoUniversity.Pages.Courses
         [BindProperty]
         public Course Course { get; set; }
 
+        // load related data for confirmation message before clicking Delete button
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -30,7 +31,9 @@ namespace ContosoUniversity.Pages.Courses
             }
 
             Course = await _context.Courses
-                .Include(c => c.Department).FirstOrDefaultAsync(m => m.CourseID == id);
+                .AsNoTracking() // improve performance when tracking isn't required for update.
+                .Include(c => c.Department)
+                .FirstOrDefaultAsync(m => m.CourseID == id);
 
             if (Course == null)
             {

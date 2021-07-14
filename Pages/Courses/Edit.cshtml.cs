@@ -24,7 +24,7 @@ namespace ContosoUniversity.Pages.Courses
             {
                 return NotFound();
             }
-            // eagerly load related data, async method
+            // eagerly load related data into nav prop Course.Department, async method
             Course = await _context.Courses
                 .Include(c => c.Department).FirstOrDefaultAsync(m => m.CourseID == id);
 

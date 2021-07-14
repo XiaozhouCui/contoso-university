@@ -83,3 +83,4 @@
 - Add base model `DepartmentNamePageModel`, to replace the DepartmentID (FK) with department names in the drop-down menu
 - `CreateModel` and `EditModel` will derive from `DepartmentNamePageModel`
 - Update the CreateModel and CreatePage to load related department names into drop-down menu.
+- Update the remaining models and pages for Course CRUD operations
