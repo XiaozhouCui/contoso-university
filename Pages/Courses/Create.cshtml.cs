@@ -14,6 +14,7 @@ namespace ContosoUniversity.Pages.Courses
             _context = context;
         }
 
+        // before page rendering, load related data (department names), sync method, no Task needed
         public IActionResult OnGet()
         {
             // Removes ViewData["DepartmentID"]. The DepartmentNameSL SelectList is a strongly typed model and will be used by the Razor page.
@@ -25,6 +26,7 @@ namespace ContosoUniversity.Pages.Courses
         [BindProperty]
         public Course Course { get; set; }
 
+        // send data to database, async method, Task needed
         public async Task<IActionResult> OnPostAsync()
         {
             var emptyCourse = new Course();
