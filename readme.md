@@ -79,8 +79,14 @@
 - In Index RazorPage, add a table of courses for the selected Instructor.
 - In Index RazorPage, add a table of student enrollments for the selected course.
 
-## Update Course Create page
+## Update Course pages
 - Add base model `DepartmentNamePageModel`, to replace the DepartmentID (FK) with department names in the drop-down menu
 - `CreateModel` and `EditModel` will derive from `DepartmentNamePageModel`
 - Update the CreateModel and CreatePage to load related department names into drop-down menu.
 - Update the remaining models and pages for Course CRUD operations
+
+## Add course assignment data to Instructor page models
+- To show course assignments as checkboxes in Instructor pages, need to add a class (view model) for assigned courses data
+- Add view model *Models/SchoolViewModels/AssignedCourseData.cs*, to store the course assignment data
+- Add base class *Pages/Instructors/InstructorCoursesPageModel.cs*, Edit and Create page models will derive from this class
+- The base class will pupulate a list of view models, and store the list into property `AssignedCourseDataList`, to render checkboxes
