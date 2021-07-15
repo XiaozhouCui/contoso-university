@@ -90,3 +90,4 @@
 - Add view model *Models/SchoolViewModels/AssignedCourseData.cs*, to store the course assignment data
 - Add base class *Pages/Instructors/InstructorCoursesPageModel.cs*, Edit and Create page models will derive from this class
 - The base class will pupulate a list of view models, and store the list into property `AssignedCourseDataList`, to render checkboxes
+- Update the Instructor Edit page model to handle checkbox selections

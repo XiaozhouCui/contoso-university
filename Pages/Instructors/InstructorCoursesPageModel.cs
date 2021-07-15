@@ -17,7 +17,8 @@ namespace ContosoUniversity.Pages.Instructors
         public void PopulateAssignedCourseData(SchoolContext context, Instructor instructor)
         {
             var allCourses = context.Courses;
-            // get a HashSet of course IDs for the given instructor (arg). A HashSet is used for efficient lookups.
+            // get a HashSet of course IDs for the given instructor (arg).
+            // A HashSet is used for efficient lookups: no duplicate, no order, read-only
             var instructorCourses = new HashSet<int>(
                 instructor.Courses.Select(c => c.CourseID));
             // initialise an empty list of view model, to be populated by looping through the courses
