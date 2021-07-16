@@ -1,4 +1,4 @@
-# Project Instructions
+# Project Walkthrough
 
 ## Create the web app project
 - `dotnet new webapp -o ContosoUniversity`
@@ -104,5 +104,9 @@
 ## Add Migration for the ConcurrencyToken
 - Adding the `ConcurrencyToken` property changes the data model, which requires a migration.
 - Create migration files `dotnet ef migrations add RowVersion`
-- Update the SQLite db `dotnet ef database update`
-- This will add a new column to the Department table.
+- Update the SQLite db tables `dotnet ef database update`
+- This will add a new column *ConcurrencyToken* to the Departments table.
+
+## Scaffold Department pages
+- Add department pages `dotnet aspnet-codegenerator razorpage -m Department -dc SchoolContext -udl -outDir Pages\Departments --referenceScriptLibraries`
+- Run the app, at this point the department page has 5 columns: **Name, Budget, Start Date, ConcurrencyToken, Administrator**
