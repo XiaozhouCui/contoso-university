@@ -103,3 +103,6 @@
 
 ## Add Migration for the ConcurrencyToken
 - Adding the `ConcurrencyToken` property changes the data model, which requires a migration.
+- Create migration files `dotnet ef migrations add RowVersion`
+- Update the SQLite db `dotnet ef database update`
+- This will add a new column to the Department table.
