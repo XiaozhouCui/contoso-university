@@ -91,3 +91,6 @@
 - Add base class *Pages/Instructors/InstructorCoursesPageModel.cs*, Edit and Create page models will derive from this class
 - The base class will pupulate a list of view models, and store the list into property `AssignedCourseDataList`, to render checkboxes
 - Update the Instructor Edit/Create page models and razor pages to handle checkbox selections
+- Update the Instructor Delete page model to delete related Courses and remove administrator assignment from Departments
+
+## Concurrency and conflict detection in EF Core
