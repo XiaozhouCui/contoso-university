@@ -41,6 +41,10 @@ namespace ContosoUniversity.Data
             // use Fluent API to configure table names for each entity
             modelBuilder.Entity<Student>().ToTable(nameof(Student));
             modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
+            // Concurrency conflict handling: configures Department.ConcurrencyToken as a concurrency token.
+            modelBuilder.Entity<Department>()
+                .Property(d => d.ConcurrencyToken)
+                .IsConcurrencyToken();
         }
     }
 }

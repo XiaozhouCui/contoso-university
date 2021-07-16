@@ -94,3 +94,12 @@
 - Update the Instructor Delete page model to delete related Courses and remove administrator assignment from Departments
 
 ## Concurrency and conflict detection in EF Core
+- *Store Wins* scenario is used for *concurrency conflict*, it ensures that no changes are overwritten without a user being alerted.
+- Properties configured as *concurrency tokens* are used to implement optimistic concurrency control.
+- EF Core checks for the value of the concurrency token in the `WHERE` clause of `UPDATE` and `DELETE` statements to detect a concurrency conflict.
+- The data model must be configured to enable conflict detection by including a **tracking column** that can be used to determine when a row has been changed.
+- In Department entity class, add a new property `ConcurrencyToken` of type GUID
+- In *SchoolContext.cs*, use fluent API to configure the new property `Department.ConcurrencyToken` as a concurrency token. Need migration
+
+## Add Migration for the ConcurrencyToken
+- Adding the `ConcurrencyToken` property changes the data model, which requires a migration.

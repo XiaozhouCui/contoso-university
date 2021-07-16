@@ -25,6 +25,9 @@ namespace ContosoUniversity.Models
         /* if the "Department.InstructorID" property was defined as non-nullable, EF Core would configure a cascade delete rule. The department would be deleted when the instructor assigned as its administrator is deleted. To avoid cascade delete, add restrict rule in Fluent API (modelBuilder) */
         public int? InstructorID { get; set; } // FK. A department may or may not have an administrator, int? means nullable
 
+        // Concurrency conflict handling: include a tracking column that can be used to determine when a row has been changed.
+        // On updates, the concurrency token value in the database is compared to the original value (read by EF Core) to ensure it has not changed since the instance was retrieved from the database. If it has changed, a DbUpdateConcurrencyException is thrown and changes are not applied.
+        public Guid ConcurrencyToken { get; set; } = Guid.NewGuid();
         public Instructor Administrator { get; set; } // An administrator is always an instructor (1-to-1), so InstructorID is included as FK
         public ICollection<Course> Courses { get; set; } // A department may have many courses, so there's a Courses navigation property
     }
