@@ -20,6 +20,7 @@ namespace ContosoUniversity.Pages.Departments
         }
 
         [BindProperty]
+        // The following code shows the Department model
         public Department Department { get; set; }
         // Replace ViewData["InstructorID"] 
         public SelectList InstructorNameSL { get; set; }
@@ -63,9 +64,12 @@ namespace ContosoUniversity.Pages.Departments
 
             departmentToUpdate.ConcurrencyToken = Guid.NewGuid();
 
-            // Set ConcurrencyToken to value read in OnGetAsync
+            // The ConcurrencyToken value of the Department entity from the HTTP POST request is set to the ConcurrencyToken value from the HTTP GET request.
             _context.Entry(departmentToUpdate).Property(d => d.ConcurrencyToken)
                                    .OriginalValue = Department.ConcurrencyToken;
+            // The value in Department.ConcurrencyToken is the value when the entity was fetched in the Get request for the Edit page. The value is provided to the OnPost method by a hidden field in the Razor page that displays the entity to be edited. The hidden field value is copied to Department.ConcurrencyToken by the model binder.
+            // OriginalValue is what EF Core uses in the WHERE clause. Before the highlighted line of code executes: OriginalValue has the value that was in the database when FirstOrDefaultAsync was called in this method. This value might be different from what was displayed on the Edit page.
+            // EF Core uses the original ConcurrencyToken value from the displayed Department entity in the SQL UPDATE statement's WHERE clause.
 
             if (await TryUpdateModelAsync<Department>(
                 departmentToUpdate,
@@ -80,6 +84,7 @@ namespace ContosoUniversity.Pages.Departments
                 catch (DbUpdateConcurrencyException ex)
                 {
                     var exceptionEntry = ex.Entries.Single();
+                    // When a concurrency error happens, the following code gets the client values (the values posted to this method)
                     var clientValues = (Department)exceptionEntry.Entity;
                     var databaseEntry = exceptionEntry.GetDatabaseValues();
                     if (databaseEntry == null)
@@ -89,13 +94,16 @@ namespace ContosoUniversity.Pages.Departments
                         return Page();
                     }
 
+                    // When a concurrency error happens, the following code gets the database values.
                     var dbValues = (Department)databaseEntry.ToObject();
                     await setDbErrorMessage(dbValues, clientValues, _context);
 
+                    // Set the ConcurrencyToken value to the new value retrieved from the database. The next time the user clicks Save, only concurrency errors that happen since the last display of the Edit page will be caught.
                     // Save the current ConcurrencyToken so next postback
                     // matches unless an new concurrency issue happens.
                     Department.ConcurrencyToken = dbValues.ConcurrencyToken;
                     // Clear the model error for the next postback.
+                    // The ModelState.Remove statement is required because ModelState has the previous ConcurrencyToken value. In the Razor Page, the ModelState value for a field takes precedence over the model property values when both are present.
                     ModelState.Remove($"{nameof(Department)}.{nameof(Department.ConcurrencyToken)}");
                 }
             }
@@ -117,6 +125,7 @@ namespace ContosoUniversity.Pages.Departments
             return Page();
         }
 
+        // The following code adds a custom error message for each column that has database values different from what was posted to OnPostAsync
         private async Task setDbErrorMessage(Department dbValues,
                 Department clientValues, SchoolContext context)
         {
