@@ -130,3 +130,5 @@
 - The column `ConcurrencyToken` shouldn't be displayed in a production app. To help show how concurrency handling works, the last portion of the ConcurrencyToken is displayed
 - Add a Utility class, so its method `GetLastChars` can be used to show the last portion of the ConcurrencyToken.
 - The Utility class uses _preprocessor directive_ `#if SQLiteVersion`, maintain one code base for both versions.
+
+## Update the Department Edit page and pagemodel
